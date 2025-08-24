@@ -181,6 +181,8 @@ class CovidService:
             'states': self.data_parser.get_unique_states(),
             'seasons': self.data_parser.get_unique_seasons(),
             'age_categories': self.data_parser.get_unique_age_categories(),
+            'sex': self.data_parser.get_unique_sex(),
+            'race': self.data_parser.get_unique_race(),
             'date_range': self.data_parser.get_date_range()
         }
     
@@ -206,19 +208,19 @@ class CovidService:
         filtered_data = data
         
         if state:
-            filtered_data = [r for r in filtered_data if r['state'] and state.lower() in r['state'].lower()]
+            filtered_data = [r for r in filtered_data if r['state'] and r['state'].lower() == state.lower()]
         
         if season:
-            filtered_data = [r for r in filtered_data if r['season'] and season.lower() in r['season'].lower()]
+            filtered_data = [r for r in filtered_data if r['season'] and r['season'].lower() == season.lower()]
         
         if age_category:
-            filtered_data = [r for r in filtered_data if r['age_category'] and age_category.lower() in r['age_category'].lower()]
+            filtered_data = [r for r in filtered_data if r['age_category'] and r['age_category'].lower() == age_category.lower()]
         
         if sex:
-            filtered_data = [r for r in filtered_data if r['sex'] and sex.lower() in r['sex'].lower()]
+            filtered_data = [r for r in filtered_data if r['sex'] and r['sex'].lower() == sex.lower()]
         
         if race:
-            filtered_data = [r for r in filtered_data if r['race'] and race.lower() in r['race'].lower()]
+            filtered_data = [r for r in filtered_data if r['race'] and r['race'].lower() == race.lower()]
         
         if min_rate is not None:
             filtered_data = [r for r in filtered_data if r['monthly_rate'] is not None and r['monthly_rate'] >= min_rate]
@@ -277,6 +279,12 @@ class CovidService:
             return sorted(data, key=lambda x: x['monthly_rate'] if x['monthly_rate'] is not None else -1, reverse=reverse)
         elif sort_by == 'season':
             return sorted(data, key=lambda x: x['season'] if x['season'] else '', reverse=reverse)
+        elif sort_by == 'age_category':
+            return sorted(data, key=lambda x: x['age_category'] if x['age_category'] else '', reverse=reverse)
+        elif sort_by == 'sex':
+            return sorted(data, key=lambda x: x['sex'] if x['sex'] else '', reverse=reverse)
+        elif sort_by == 'race':
+            return sorted(data, key=lambda x: x['race'] if x['race'] else '', reverse=reverse)
         else:
             # Default to date sorting
             return sorted(data, key=lambda x: x['date'] if x['date'] else '', reverse=reverse)

@@ -61,6 +61,8 @@ export interface FilterOptions {
   states: string[];
   seasons: string[];
   age_categories: string[];
+  sex: string[];
+  race: string[];
   date_range: {
     start: string | null;
     end: string | null;

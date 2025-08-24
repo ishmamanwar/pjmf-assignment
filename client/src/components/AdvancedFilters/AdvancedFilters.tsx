@@ -18,6 +18,8 @@ export const AdvancedFilters = ({
     states: string[];
     seasons: string[];
     age_categories: string[];
+    sex: string[];
+    race: string[];
   } | null>(null);
 
   const [filters, setFilters] = useState<CovidSearchParams>({
@@ -40,6 +42,8 @@ export const AdvancedFilters = ({
           states: options.states,
           seasons: options.seasons,
           age_categories: options.age_categories,
+          sex: options.sex || [],
+          race: options.race || [],
         });
       }
     };
@@ -165,11 +169,13 @@ export const AdvancedFilters = ({
             className="filter-select"
           >
             <option value="">All Ages</option>
-            {filterOptions?.age_categories.map((age) => (
-              <option key={age} value={age}>
-                {age}
-              </option>
-            ))}
+            {filterOptions?.age_categories
+              .filter((age) => age.toLowerCase() !== "all")
+              .map((age) => (
+                <option key={age} value={age}>
+                  {age}
+                </option>
+              ))}
           </select>
         </div>
 
@@ -182,9 +188,13 @@ export const AdvancedFilters = ({
             className="filter-select"
           >
             <option value="">All</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Overall">Overall</option>
+            {filterOptions?.sex
+              .filter((sexValue) => sexValue.toLowerCase() !== "all")
+              .map((sexValue) => (
+                <option key={sexValue} value={sexValue}>
+                  {sexValue}
+                </option>
+              ))}
           </select>
         </div>
 
@@ -197,14 +207,13 @@ export const AdvancedFilters = ({
             className="filter-select"
           >
             <option value="">All</option>
-            <option value="White">White</option>
-            <option value="Black">Black</option>
-            <option value="Hispanic">Hispanic</option>
-            <option value="Asian">Asian</option>
-            <option value="American Indian/Alaska Native">
-              American Indian/Alaska Native
-            </option>
-            <option value="Multiple/Other">Multiple/Other</option>
+            {filterOptions?.race
+              .filter((raceValue) => raceValue.toLowerCase() !== "all")
+              .map((raceValue) => (
+                <option key={raceValue} value={raceValue}>
+                  {raceValue}
+                </option>
+              ))}
           </select>
         </div>
       </div>

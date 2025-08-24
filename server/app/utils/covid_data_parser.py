@@ -153,6 +153,18 @@ class CovidDataParser:
         categories = list(set(record['age_category'] for record in data if record['age_category']))
         return sorted(categories)
     
+    def get_unique_sex(self) -> List[str]:
+        """Get list of unique sex values"""
+        data = self.parse_data()
+        sex_values = list(set(record['sex'] for record in data if record['sex']))
+        return sorted(sex_values)
+    
+    def get_unique_race(self) -> List[str]:
+        """Get list of unique race values"""
+        data = self.parse_data()
+        race_values = list(set(record['race'] for record in data if record['race']))
+        return sorted(race_values)
+    
     def get_date_range(self) -> Dict[str, Any]:
         """Get the date range of the data"""
         data = self.parse_data()
