@@ -17,6 +17,7 @@ export const Data = () => {
   });
 
   const [appliedFilters, setAppliedFilters] = useState<CovidSearchParams>({});
+  const [stateSearch, setStateSearch] = useState<string>("");
 
   useEffect(() => {
     const finalParams = { ...searchParams, ...appliedFilters };
@@ -38,6 +39,42 @@ export const Data = () => {
   const handleFiltersChange = (filters: CovidSearchParams) => {
     setAppliedFilters(filters);
     setSearchParams((prev) => ({ ...prev, page: 1 })); // Reset to first page when filters change
+  };
+
+  const handleStateSearch = (searchValue: string) => {
+    setStateSearch(searchValue);
+  };
+
+  const handleStateSearchSubmit = (
+    e?: React.FormEvent | React.KeyboardEvent
+  ) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    // Apply state filter
+    if (stateSearch.trim()) {
+      const newFilters = { ...appliedFilters, state: stateSearch.trim() };
+      setAppliedFilters(newFilters);
+    } else {
+      // Remove state filter if search is empty
+      const { state, ...filtersWithoutState } = appliedFilters;
+      setAppliedFilters(filtersWithoutState);
+    }
+    setSearchParams((prev) => ({ ...prev, page: 1 }));
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleStateSearchSubmit(e);
+    }
+  };
+
+  const clearStateSearch = () => {
+    setStateSearch("");
+    const { state, ...filtersWithoutState } = appliedFilters;
+    setAppliedFilters(filtersWithoutState);
+    setSearchParams((prev) => ({ ...prev, page: 1 }));
   };
 
   const handleSortChange = (sortBy: CovidSearchParams["sort_by"]) => {
@@ -105,6 +142,36 @@ export const Data = () => {
               <span className="total-records">
                 {pagination.total_records.toLocaleString()} total records
               </span>
+            </div>
+          </div>
+
+          <div className="state-search-container">
+            <div className="state-search-wrapper">
+              <form
+                onSubmit={handleStateSearchSubmit}
+                className="state-search-form"
+              >
+                <div className="state-search-input-container">
+                  <input
+                    type="text"
+                    value={stateSearch}
+                    onChange={(e) => handleStateSearch(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Search by state... (Press Enter to filter)"
+                    className="state-search-input"
+                  />
+                  {stateSearch && (
+                    <button
+                      type="button"
+                      onClick={clearStateSearch}
+                      className="clear-search-button"
+                      title="Clear search"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </form>
             </div>
           </div>
 

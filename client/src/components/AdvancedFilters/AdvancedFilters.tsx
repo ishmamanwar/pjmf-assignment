@@ -91,7 +91,7 @@ export const AdvancedFilters = ({
       <div className="filters-header">
         <h3>Advanced Filters</h3>
         <button onClick={handleReset} className="reset-button">
-          Reset All
+          Reset
         </button>
       </div>
 
