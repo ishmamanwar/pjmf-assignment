@@ -52,6 +52,9 @@ export const Home = () => {
           <Link to="/data" className="cta-button">
             Explore COVID-19 Data
           </Link>
+          <Link to="/trends" className="cta-button secondary">
+            View Trends & Analytics
+          </Link>
         </div>
 
         <div className="data-source">

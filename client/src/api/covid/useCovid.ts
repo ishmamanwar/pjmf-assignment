@@ -1,5 +1,11 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
+import {
+  getUniqueStates,
+  getUniqueSeasons,
+  getDateRange,
+  getAverageRate,
+} from "../../helpers";
 import type {
   CovidRecord,
   CovidApiResponse,
@@ -114,11 +120,13 @@ export const useCovid = () => {
         setError(null);
 
         const searchParams = new URLSearchParams();
-        if (filters.state) searchParams.append("state", filters.state);
-        if (filters.age_category)
-          searchParams.append("age_category", filters.age_category);
-        if (filters.sex) searchParams.append("sex", filters.sex);
-        if (filters.race) searchParams.append("race", filters.race);
+
+        // Add all possible filter parameters
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== "") {
+            searchParams.append(key, value.toString());
+          }
+        });
 
         const response = await api.get<{
           data: TrendData[];
@@ -186,39 +194,25 @@ export const useCovid = () => {
     }
   }, []);
 
-  // Utility functions for data manipulation
-  const getUniqueStates = useCallback((): string[] => {
-    const states = data.map((record) => record.state).filter(Boolean);
-    return [...new Set(states)].sort();
+  // Utility functions for data manipulation (using helpers)
+  const getDataUniqueStates = useCallback((): string[] => {
+    return getUniqueStates(data);
   }, [data]);
 
-  const getUniqueSeasons = useCallback((): string[] => {
-    const seasons = data.map((record) => record.season).filter(Boolean);
-    return [...new Set(seasons)].sort();
+  const getDataUniqueSeasons = useCallback((): string[] => {
+    return getUniqueSeasons(data);
   }, [data]);
 
-  const getDateRange = useCallback((): {
+  const getDataDateRange = useCallback((): {
     start: string | null;
     end: string | null;
   } => {
-    const dates = data.map((record) => record.date).filter(Boolean);
-    if (dates.length === 0) return { start: null, end: null };
-
-    const sortedDates = dates.sort();
-    return {
-      start: sortedDates[0],
-      end: sortedDates[sortedDates.length - 1],
-    };
+    return getDateRange(data);
   }, [data]);
 
-  const getAverageRate = useCallback(
+  const getDataAverageRate = useCallback(
     (records: CovidRecord[] = data): number => {
-      const rates = records
-        .map((record) => record.monthly_rate)
-        .filter((rate): rate is number => rate !== null);
-      return rates.length > 0
-        ? rates.reduce((sum, rate) => sum + rate, 0) / rates.length
-        : 0;
+      return getAverageRate(records);
     },
     [data]
   );
@@ -242,9 +236,9 @@ export const useCovid = () => {
     checkHealth,
 
     // Utility functions
-    getUniqueStates,
-    getUniqueSeasons,
-    getDateRange,
-    getAverageRate,
+    getUniqueStates: getDataUniqueStates,
+    getUniqueSeasons: getDataUniqueSeasons,
+    getDateRange: getDataDateRange,
+    getAverageRate: getDataAverageRate,
   };
 };

@@ -67,6 +67,10 @@
 
 .cta-section {
   margin: 3rem 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cta-button {
@@ -85,6 +89,17 @@
 .cta-button:hover {
   background: var(--pjmf-mcgovern-dark-teal);
   transform: translateY(-2px);
+  color: white;
+}
+
+.cta-button.secondary {
+  background: var(--pjmf-mcgovern-gold);
+  color: var(--pjmf-mcgovern-gray);
+}
+
+.cta-button.secondary:hover {
+  background: var(--pjmf-mcgovern-rust);
+  color: white;
 }
 
 .data-source {

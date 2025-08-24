@@ -13,6 +13,9 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/x-charts": "^8.10.2",
     "axios": "^1.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

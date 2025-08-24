@@ -72,28 +72,54 @@ def get_state_summary(state):
 def get_trends():
     """Get trends over time with optional filters"""
     try:
-        # Get optional filter parameters
+        # Get all possible filter parameters (same as advanced search)
         state = request.args.get('state')
+        season = request.args.get('season')
         age_category = request.args.get('age_category')
         sex = request.args.get('sex')
         race = request.args.get('race')
         
+        # Rate range filters
+        min_rate = request.args.get('min_rate')
+        max_rate = request.args.get('max_rate')
+        
+        if min_rate:
+            min_rate = float(min_rate)
+        if max_rate:
+            max_rate = float(max_rate)
+        
+        # Date range filters
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        
         result = covid_service.get_trends_over_time(
             state=state,
+            season=season,
             age_category=age_category,
             sex=sex,
-            race=race
+            race=race,
+            min_rate=min_rate,
+            max_rate=max_rate,
+            start_date=start_date,
+            end_date=end_date
         )
         
         return jsonify({
             'data': result,
             'filters': {
                 'state': state,
+                'season': season,
                 'age_category': age_category,
                 'sex': sex,
-                'race': race
+                'race': race,
+                'min_rate': min_rate,
+                'max_rate': max_rate,
+                'start_date': start_date,
+                'end_date': end_date
             }
         }), 200
+    except ValueError as e:
+        return jsonify({"error": f"Invalid parameter: {str(e)}"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

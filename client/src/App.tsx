@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./components";
-import { About, Home, Data } from "./pages";
+import { About, Home, Data, Trends } from "./pages";
 import "./styles/globals.css";
 import "./styles/pjmf.tokens.css";
 
@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/data" element={<Data />} />
+        <Route path="/trends" element={<Trends />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </>

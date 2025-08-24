@@ -12,6 +12,9 @@ export const Header = () => {
         <Link to="/data" className="nav-link">
           Data
         </Link>
+        <Link to="/trends" className="nav-link">
+          Trends
+        </Link>
         <Link to="/about" className="nav-link">
           About
         </Link>

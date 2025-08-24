@@ -94,7 +94,12 @@ export interface CovidSearchParams {
 
 export interface TrendFilters {
   state?: string;
+  season?: string;
   age_category?: string;
   sex?: string;
   race?: string;
+  min_rate?: number;
+  max_rate?: number;
+  start_date?: string;
+  end_date?: string;
 }

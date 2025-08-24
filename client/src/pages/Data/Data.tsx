@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useCovid } from "../../api";
 import { AdvancedFilters } from "../../components";
+import { formatDisplayDate, formatRate } from "../../helpers";
 import type { CovidSearchParams } from "../../api";
 import "./Data.css";
 
@@ -26,17 +27,9 @@ export const Data = () => {
     }
   }, [searchParams, appliedFilters, fetchCovidData, advancedSearch]);
 
-  const formatDate = (dateString: string | null) => {
-    if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-    });
-  };
+  // Using helper function for date formatting
 
-  const formatRate = (rate: number | null) => {
-    return rate !== null ? rate.toFixed(1) : "N/A";
-  };
+  // Using helper function for rate formatting
 
   const handlePageChange = (newPage: number) => {
     setSearchParams((prev) => ({ ...prev, page: newPage }));
@@ -168,7 +161,9 @@ export const Data = () => {
                   {data.map((record) => (
                     <tr key={record.id} className="table-row">
                       <td className="state-cell">{record.state}</td>
-                      <td className="date-cell">{formatDate(record.date)}</td>
+                      <td className="date-cell">
+                        {formatDisplayDate(record.date)}
+                      </td>
                       <td className="season-cell">{record.season}</td>
                       <td className="age-cell">{record.age_category}</td>
                       <td className="sex-cell">{record.sex}</td>

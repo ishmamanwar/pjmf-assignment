@@ -1,0 +1,227 @@
+.trends-content {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.trends-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.filters-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+.trends-main {
+  min-width: 0;
+}
+
+.trends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--pjmf-mcgovern-teal);
+}
+
+.trends-header-left h1 {
+  color: var(--pjmf-mcgovern-gray);
+  font-family: var(--pjmf-font-work-sans);
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  font-size: 2.2rem;
+}
+
+.trends-subtitle {
+  color: var(--pjmf-mcgovern-gray);
+  font-family: var(--pjmf-font-proxima-nova);
+  margin: 0;
+  font-size: 1rem;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+.trends-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.total-periods {
+  color: var(--pjmf-mcgovern-teal);
+  font-family: var(--pjmf-font-work-sans);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.loading-message,
+.error-message {
+  text-align: center;
+  padding: 3rem;
+}
+
+.loading-message h2,
+.error-message h2 {
+  color: var(--pjmf-mcgovern-gray);
+  font-family: var(--pjmf-font-work-sans);
+  margin: 0 0 1rem 0;
+}
+
+.error-message p {
+  color: var(--pjmf-mcgovern-gray);
+  font-family: var(--pjmf-font-proxima-nova);
+  margin: 0;
+}
+
+.charts-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.loading-spinner {
+  color: var(--pjmf-mcgovern-teal);
+  font-family: var(--pjmf-font-proxima-nova);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Improved spacing for two-chart layout */
+.charts-container .chart-section {
+  margin-bottom: 2rem;
+}
+
+.charts-container .chart-section:last-child {
+  margin-bottom: 0;
+}
+
+.chart-section {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--pjmf-light-gray);
+}
+
+.chart-section h3 {
+  color: var(--pjmf-mcgovern-gray);
+  font-family: var(--pjmf-font-work-sans);
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--pjmf-light-teal);
+  padding-bottom: 0.5rem;
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  overflow-x: auto;
+}
+
+.no-data-message {
+  color: var(--pjmf-mcgovern-med-gray);
+  font-family: var(--pjmf-font-proxima-nova);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  background: var(--pjmf-light-gray);
+  border-radius: 8px;
+  border: 1px dashed var(--pjmf-mcgovern-med-gray);
+}
+
+/* MUI Charts Global Styling Overrides */
+.chart-wrapper .MuiChartsTooltip-root {
+  background: white !important;
+  border: 1px solid var(--pjmf-mcgovern-teal) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.chart-wrapper .MuiChartsTooltip-cell {
+  color: var(--pjmf-mcgovern-gray) !important;
+  font-family: var(--pjmf-font-proxima-nova) !important;
+}
+
+.chart-wrapper .MuiChartsLegend-series {
+  font-family: var(--pjmf-font-proxima-nova) !important;
+}
+
+.chart-wrapper .MuiChartsAxis-root {
+  font-family: var(--pjmf-font-proxima-nova) !important;
+}
+
+/* Custom Chart Colors */
+.chart-wrapper [data-testid="chart"] {
+  font-family: var(--pjmf-font-proxima-nova);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .trends-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .filters-sidebar {
+    position: static;
+    order: 2;
+  }
+
+  .trends-main {
+    order: 1;
+  }
+
+  .chart-wrapper {
+    overflow-x: scroll;
+  }
+
+  .chart-section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .trends-content {
+    padding: 1rem;
+  }
+
+  .trends-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .trends-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .chart-wrapper {
+    min-height: 300px;
+  }
+
+  .chart-section {
+    padding: 1rem;
+  }
+
+  /* Make charts responsive */
+  .chart-wrapper > div {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
