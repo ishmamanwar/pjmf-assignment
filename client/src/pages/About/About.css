@@ -1,0 +1,20 @@
+.about-page {
+  padding: var(--pjmf-spacing-xl);
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.about-page h1 {
+  font-family: var(--pjmf-font-work-sans);
+  font-weight: bold;
+  color: var(--pjmf-mcgovern-gray);
+  margin-bottom: var(--pjmf-spacing-lg);
+  font-size: var(--pjmf-font-size-2xl);
+}
+
+.about-page p {
+  font-family: var(--pjmf-font-proxima-nova);
+  color: var(--pjmf-mcgovern-gray);
+  font-size: var(--pjmf-font-size-lg);
+  font-weight: normal;
+}

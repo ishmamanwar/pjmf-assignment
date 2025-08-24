@@ -1,0 +1,30 @@
+.hero-content {
+  padding: var(--pjmf-spacing-xl);
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.hero-content h1 {
+  font-family: var(--pjmf-font-work-sans);
+  font-weight: bold;
+  font-size: var(--pjmf-font-size-2xl);
+  line-height: 1.1;
+  color: var(--pjmf-mcgovern-gray);
+  margin-bottom: var(--pjmf-spacing-lg);
+}
+
+.hero-content .card {
+  padding: var(--pjmf-spacing-lg);
+  border-radius: var(--pjmf-border-radius-lg);
+  background-color: var(--pjmf-light-gray);
+  border: 1px solid var(--pjmf-mcgovern-med-gray);
+  margin: var(--pjmf-spacing-lg) 0;
+}
+
+.hero-content .card p {
+  font-family: var(--pjmf-font-proxima-nova);
+  color: var(--pjmf-mcgovern-gray);
+  font-size: var(--pjmf-font-size-lg);
+  font-weight: normal;
+  margin: 0;
+}

@@ -1,0 +1,50 @@
+/* Tokens based on the PJMF style guide */
+
+:root {
+  /* Primary Colors - Foundational brand colors */
+  --pjmf-mcgovern-teal: #007d99;
+  --pjmf-mcgovern-gold: #ffc719;
+
+  /* Primary Text Color */
+  --pjmf-mcgovern-gray: #696e71;
+
+  /* Secondary Colors */
+  --pjmf-mcgovern-rust: #de8b39;
+  --pjmf-mcgovern-lime: #c2ce51;
+  --pjmf-mcgovern-peacock: #438c8b;
+  --pjmf-mcgovern-dark-teal: #005771;
+  --pjmf-mcgovern-medium-teal: #7fafc3;
+  --pjmf-mcgovern-caramel: #e1bc7c;
+  --pjmf-mcgovern-pine: #79a27a;
+  --pjmf-mcgovern-med-gray: #a7a9ac;
+
+  /* Tints */
+  --pjmf-light-teal: #cbdce1;
+  --pjmf-light-lime: #eef2c2;
+  --pjmf-light-gold: #fae6bb;
+  --pjmf-light-pine: #c4d2c3;
+  --pjmf-light-gray: #e6e7e8;
+
+  /* Typography */
+  --pjmf-font-work-sans: "Work Sans", sans-serif;
+  --pjmf-font-proxima-nova: "Proxima Nova", sans-serif;
+  --pjmf-font-raleway: "Raleway", sans-serif;
+
+  /* Font Sizes */
+  --pjmf-font-size-base: 1rem;
+  --pjmf-font-size-lg: 1.25rem;
+  --pjmf-font-size-sm: 0.875rem;
+  --pjmf-font-size-xl: 1.5rem;
+  --pjmf-font-size-2xl: 2rem;
+
+  /* Spacing */
+  --pjmf-spacing-xs: 0.25rem;
+  --pjmf-spacing-sm: 0.5rem;
+  --pjmf-spacing-md: 1rem;
+  --pjmf-spacing-lg: 1.5rem;
+  --pjmf-spacing-xl: 3rem;
+
+  /* Border radius */
+  --pjmf-border-radius: 0.375rem;
+  --pjmf-border-radius-lg: 0.5rem;
+}
