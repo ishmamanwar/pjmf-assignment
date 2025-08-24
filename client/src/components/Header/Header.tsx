@@ -9,6 +9,9 @@ export const Header = () => {
         <Link to="/" className="logo-link">
           <img src={logo} alt="PJMF Logo" className="logo" />
         </Link>
+        <Link to="/data" className="nav-link">
+          Data
+        </Link>
         <Link to="/about" className="nav-link">
           About
         </Link>
