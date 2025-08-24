@@ -224,6 +224,28 @@ npm run dev
    - Color-coded visualization
    - Demographic and temporal filtering
 
+### Screenshots
+
+#### Home Page
+
+![Home Page](client/src/assets/home.png)
+_Welcome page with dashboard overview and features description_
+
+#### Data Table Page
+
+![Data Page](client/src/assets/data.png)
+_Interactive data table with advanced filtering, state search, and pagination_
+
+#### Trends Analysis Page
+
+![Trends Page](client/src/assets/trends.png)
+_Data visualization with trend charts and time-series analysis_
+
+#### Heat Map Page
+
+![Heat Map](client/src/assets/map.png)
+_Interactive USA map showing state-level hospitalization rates_
+
 ### Data Features
 
 - **Advanced Search**: Filter by state, season, age category, sex, race/ethnicity, rate ranges, and date ranges
