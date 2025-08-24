@@ -88,8 +88,8 @@ export const Data = () => {
   };
 
   const getSortIcon = (column: CovidSearchParams["sort_by"]) => {
-    if (searchParams.sort_by !== column) return "↕️";
-    return searchParams.sort_order === "asc" ? "↑" : "↓";
+    if (searchParams.sort_by !== column) return "";
+    return searchParams.sort_order === "asc" ? " ↑" : " ↓";
   };
 
   if (loading && data.length === 0) {

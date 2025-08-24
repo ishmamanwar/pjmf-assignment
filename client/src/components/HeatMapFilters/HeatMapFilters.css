@@ -103,7 +103,7 @@
 .filter-input[type="date"] {
   max-width: 100%;
   overflow: hidden;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 
 .date-range {

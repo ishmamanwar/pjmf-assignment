@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./Home.css";
 
 export const Home = () => {
@@ -8,10 +7,10 @@ export const Home = () => {
         <h1>Welcome to PJMF COVID-19 Data Dashboard</h1>
         <p className="welcome-description">
           This dashboard provides comprehensive access to monthly COVID-19
-          hospitalization data from the COVID-NET surveillance system. Explore
-          trends, analyze state-specific data, and gain insights from
-          laboratory-confirmed COVID-19 hospitalizations across the United
-          States.
+          hospitalization data from the COVID-NET surveillance system. Browse
+          detailed data tables, view trend analysis charts, and explore an
+          interactive heat map showing hospitalization rates across all US
+          states.
         </p>
 
         <div className="features-grid">
@@ -42,22 +41,22 @@ export const Home = () => {
           <div className="feature-card">
             <h3>Interactive Visualizations</h3>
             <p>
-              Explore data through sortable tables and trend analysis tools to
-              identify patterns over time.
+              Explore data through sortable tables, trend analysis charts, and
+              an interactive USA heat map showing state-level hospitalization
+              rates.
             </p>
           </div>
         </div>
 
         <div className="cta-section">
-          <Link to="/data" className="cta-button">
-            Explore COVID-19 Data
-          </Link>
-          <Link to="/trends" className="cta-button secondary">
-            View Trends & Analytics
-          </Link>
-          <Link to="/heatmap" className="cta-button tertiary">
-            Interactive Map
-          </Link>
+          <a
+            href="https://www.cdc.gov/covid/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-button"
+          >
+            Visit CDC COVID-19 Information
+          </a>
         </div>
 
         <div className="data-source">

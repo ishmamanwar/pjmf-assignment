@@ -1,15 +1,15 @@
-# PJMF Assignment
+# PJMF COVID-19 Data Dashboard
 
-A full-stack web application built with React (TypeScript) frontend and Flask (Python) backend for managing users.
+A full-stack web application built with React (TypeScript) frontend and Flask (Python) backend for visualizing and analyzing COVID-19 hospitalization data.
 
 ## Project Overview
 
 This project consists of:
 
-- **Frontend**: React 19 + TypeScript + Vite application
-- **Backend**: Flask 3.0 + Python REST API
-- **Data**: JSON-based data storage
-- **Features**: User CRUD operations, search, and filtering
+- **Frontend**: React 19 + TypeScript + Vite application with interactive data visualizations
+- **Backend**: Flask 3.0 + Python REST API for COVID-19 data processing
+- **Data**: COVID-19 hospitalization data from COVID-NET surveillance system
+- **Features**: Data table with advanced filtering, trend analysis, interactive heat map
 
 ## Prerequisites
 
@@ -113,6 +113,8 @@ cp env.example .env
 # Default values should work for local development
 ```
 
+**Note**: The virtual environment is **required** to isolate project dependencies from your system Python installation, preventing conflicts between different projects.
+
 ### 3. Frontend Setup (React App)
 
 #### All Platforms
@@ -122,15 +124,17 @@ cd client
 npm install
 ```
 
-#### Environment Configuration
+#### Environment Configuration (Optional)
 
 ```bash
-# Copy environment template
+# Copy environment template (optional - fallback values are provided)
 cp env.example .env.local
 
-# Edit .env.local file with your preferred editor
-# Default values should work for local development
+# Edit .env.local file to customize API URL if needed
+# Default: VITE_API_BASE_URL=http://127.0.0.1:5001/api
 ```
+
+**Note**: The frontend will automatically use `http://127.0.0.1:5001/api` as fallback if no environment file is configured.
 
 ## Running the Application
 
@@ -155,19 +159,28 @@ python run.py
 **Expected Output:**
 
 ```
-Starting PJMF Flask Server...
-Using data from: ../data/users.json
+Starting PJMF Flask Server - COVID-19 Data Dashboard...
+COVID data: ../data/rows.json
 Server will be available at: http://127.0.0.1:5001
+
 API endpoints:
    GET    /api/health
-   GET    /api/users
-   GET    /api/users/<id>
-   POST   /api/users
-   PUT    /api/users/<id>
-   DELETE /api/users/<id>
+
+--- COVID-19 Hospitalization Data API ---
+   GET    /api/covid
+   GET    /api/covid/state/<state>
+   GET    /api/covid/state/<state>/summary
+   GET    /api/covid/trends
+   GET    /api/covid/search
+   GET    /api/covid/filters
+   GET    /api/covid/health
+   GET    /api/covid/all-records
+
 Query parameters:
-   ?search=<query>  - Search by name or role
-   ?role=<role>     - Filter by role
+   ?page=1, ?per_page=50, ?sort_by=date, ?sort_order=desc
+   ?state=<state>, ?season=<season>, ?age_category=<age>
+   ?sex=<sex>, ?race=<race>, ?min_rate=<num>, ?max_rate=<num>
+   ?start_date=<YYYY-MM-DD>, ?end_date=<YYYY-MM-DD>
 ```
 
 ### 2. Start the Frontend Development Server
@@ -182,7 +195,7 @@ npm run dev
 **Expected Output:**
 
 ```
-  VITE v7.1.2  ready in 500 ms
+  VITE v7.1.3  ready in 500 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
@@ -193,45 +206,99 @@ npm run dev
 - **Frontend**: Open [http://localhost:5173](http://localhost:5173) in your browser
 - **Backend API**: Available at [http://127.0.0.1:5001/api](http://127.0.0.1:5001/api)
 
+## Application Features
+
+### Pages
+
+1. **Home**: Welcome page with dashboard overview
+2. **Data**: Interactive data table with:
+   - State search bar
+   - Advanced filtering (season, demographics, date ranges)
+   - Sortable columns
+   - Pagination
+3. **Trends**: Data visualization with charts showing:
+   - Hospitalization rate trends over time
+   - Month-to-month comparisons
+4. **Heat Map**: Interactive USA map showing:
+   - State-level hospitalization rates
+   - Color-coded visualization
+   - Demographic and temporal filtering
+
+### Data Features
+
+- **Advanced Search**: Filter by state, season, age category, sex, race/ethnicity, rate ranges, and date ranges
+- **Sorting**: Sort by any column in ascending or descending order
+- **Pagination**: Navigate through large datasets efficiently
+- **Trend Analysis**: Visualize patterns over time with interactive charts
+- **Geographic Visualization**: Heat map showing state-level data
+
 ## Project Structure
 
 ```
 pjmf-assignment/
-├── client/                 # React frontend
+├── client/                    # React frontend
 │   ├── src/
-│   │   ├── api/           # API integration
-│   │   ├── components/    # React components
-│   │   ├── pages/         # Page components
-│   │   └── styles/        # CSS styles
-│   ├── package.json       # Node.js dependencies
-│   └── env.example        # Frontend environment template
-├── server/                 # Flask backend
+│   │   ├── api/              # API integration (COVID data)
+│   │   │   └── covid/        # COVID-specific API hooks
+│   │   ├── components/       # Reusable React components
+│   │   │   ├── AdvancedFilters/
+│   │   │   ├── Header/
+│   │   │   ├── HeatMapFilters/
+│   │   │   └── Modal/
+│   │   ├── helpers/          # Utility functions
+│   │   ├── pages/            # Page components
+│   │   │   ├── Data/         # Data table page
+│   │   │   ├── HeatMap/      # Interactive map page
+│   │   │   ├── Home/         # Welcome page
+│   │   │   └── Trends/       # Charts and visualization
+│   │   └── styles/           # CSS styles with PJMF design tokens
+│   ├── package.json          # Node.js dependencies
+│   └── env.example           # Frontend environment template
+├── server/                    # Flask backend
 │   ├── app/
-│   │   ├── routes/        # API route definitions
-│   │   └── services/      # Business logic
-│   ├── requirements.txt    # Python dependencies
-│   ├── run.py             # Server entry point
-│   └── env.example        # Backend environment template
-├── data/                   # Data storage
-│   └── users.json         # User data
-└── README.md              # This file
+│   │   ├── routes/           # API route definitions
+│   │   │   └── covid.py      # COVID data endpoints
+│   │   ├── services/         # Business logic
+│   │   │   └── covid_service.py
+│   │   └── utils/            # Utility functions
+│   │       └── covid_data_parser.py
+│   ├── requirements.txt       # Python dependencies
+│   ├── run.py                # Server entry point
+│   └── env.example           # Backend environment template
+├── data/                      # Data storage
+│   └── rows.json             # COVID-19 hospitalization data
+└── README.md                 # This file
 ```
 
 ## API Endpoints
 
-| Method | Endpoint          | Description                                       |
-| ------ | ----------------- | ------------------------------------------------- |
-| GET    | `/api/health`     | Health check endpoint                             |
-| GET    | `/api/users`      | Get all users (with optional search/role filters) |
-| GET    | `/api/users/<id>` | Get user by ID                                    |
-| POST   | `/api/users`      | Create new user                                   |
-| PUT    | `/api/users/<id>` | Update existing user                              |
-| DELETE | `/api/users/<id>` | Delete user                                       |
+### Health Check
+
+| Method | Endpoint      | Description              |
+| ------ | ------------- | ------------------------ |
+| GET    | `/api/health` | Application health check |
+
+### COVID-19 Data
+
+| Method | Endpoint                           | Description                       |
+| ------ | ---------------------------------- | --------------------------------- |
+| GET    | `/api/covid`                       | Get paginated COVID data          |
+| GET    | `/api/covid/all-records`           | Get all records (for aggregation) |
+| GET    | `/api/covid/state/<state>`         | Get data for specific state       |
+| GET    | `/api/covid/state/<state>/summary` | Get summary statistics for state  |
+| GET    | `/api/covid/trends`                | Get trend analysis data           |
+| GET    | `/api/covid/search`                | Advanced search with filters      |
+| GET    | `/api/covid/filters`               | Get available filter options      |
+| GET    | `/api/covid/health`                | COVID data service health check   |
 
 ### Query Parameters
 
-- `?search=<query>` - Search users by name or role
-- `?role=<role>` - Filter users by specific role
+- **Pagination**: `?page=1&per_page=50`
+- **Sorting**: `?sort_by=date&sort_order=desc`
+- **Filtering**: `?state=<state>&season=<season>&age_category=<age>`
+- **Demographics**: `?sex=<sex>&race=<race>`
+- **Rate Range**: `?min_rate=<num>&max_rate=<num>`
+- **Date Range**: `?start_date=<YYYY-MM-DD>&end_date=<YYYY-MM-DD>`
 
 ## Development
 
@@ -239,22 +306,25 @@ pjmf-assignment/
 
 - The Flask server runs in debug mode by default
 - Changes to Python files will automatically reload the server
-- API endpoints are defined in `server/app/routes/`
-- Business logic is in `server/app/services/`
+- API endpoints are defined in `server/app/routes/covid.py`
+- Business logic is in `server/app/services/covid_service.py`
+- Data parsing utilities in `server/app/utils/covid_data_parser.py`
 
 ### Frontend Development
 
 - React app uses Vite for fast development
 - Hot module replacement enabled
 - TypeScript for type safety
-- Components in `client/src/components/`
-- Pages in `client/src/pages/`
+- Components follow PJMF design system with custom CSS tokens
+- Charts built with @mui/x-charts
+- Interactive map using @mirawision/usa-map-react
 
 ### Data Management
 
-- User data is stored in `data/users.json`
-- The backend reads from this file on startup
-- Changes are persisted to the file
+- COVID-19 data is stored in `data/rows.json`
+- Data is parsed from Socrata JSON format
+- Backend provides filtering, sorting, and aggregation
+- Frontend caches data for better performance
 
 ## Troubleshooting
 
@@ -264,8 +334,8 @@ pjmf-assignment/
 
 If you get "port already in use" errors:
 
-- **Backend**: Change the port in `server/.env` file
-- **Frontend**: Vite will automatically suggest an alternative port
+- **Backend**: Change the port in `server/.env` file (default: 5001)
+- **Frontend**: Vite will automatically suggest an alternative port (default: 5173)
 
 #### Python Virtual Environment Issues
 
@@ -283,22 +353,59 @@ If you get "port already in use" errors:
 #### CORS Issues
 
 - Ensure the backend server is running
-- Check that the frontend environment variable `VITE_API_BASE_URL` points to the correct backend URL
-- The backend has CORS enabled by default
+- The backend has CORS enabled by default for all origins
+- Check console for specific CORS error messages
+
+#### Environment Variable Issues
+
+- Frontend: API base URL fallback is `http://127.0.0.1:5001/api`
+- Backend: Default values are provided for all environment variables
+- Verify `.env` files are properly formatted (no spaces around `=`)
+
+#### Data Loading Issues
+
+- Ensure `data/rows.json` exists and is readable
+- Check server console for data parsing errors
+- Verify file permissions on data directory
 
 ### Getting Help
 
 - Check the console output for error messages
 - Verify all environment variables are set correctly
 - Ensure both frontend and backend servers are running
-- Check that the data file `data/users.json` exists and is readable
+- Check that the data file `data/rows.json` exists and is readable
+- Verify Python virtual environment is activated
+- Check Node.js and Python versions meet requirements
 
 ## Technologies Used
 
-- **Frontend**: React 19, TypeScript, Vite, CSS3
-- **Backend**: Flask 3.0, Python 3.11+, Flask-CORS
-- **Data**: JSON file storage
-- **Development**: Git, npm, pip, virtual environments
+### Frontend
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **@mui/x-charts** - Data visualization
+- **@mirawision/usa-map-react** - Interactive USA map
+- **Axios** - HTTP client
+- **CSS3** with PJMF design tokens
+
+### Backend
+
+- **Flask 3.0** - Web framework
+- **Python 3.11+** - Programming language
+- **Flask-CORS** - Cross-origin resource sharing
+
+### Data & Development
+
+- **JSON** - Data storage format
+- **Git** - Version control
+- **npm** - Frontend package management
+- **pip** - Python package management
+- **Virtual environments** - Dependency isolation
+
+## Author
+
+Created by **Ishmam Anwar** as part of the PJMF assignment.
 
 ## License
 

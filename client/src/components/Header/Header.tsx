@@ -18,9 +18,6 @@ export const Header = () => {
         <Link to="/heatmap" className="nav-link">
           Map
         </Link>
-        <Link to="/about" className="nav-link">
-          About
-        </Link>
       </div>
     </header>
   );
