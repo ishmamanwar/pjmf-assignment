@@ -122,39 +122,20 @@ class CovidService:
                            max_rate: Optional[float] = None,
                            start_date: Optional[str] = None,
                            end_date: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get trends over time with optional filters"""
+        """Get trends over time with optional filters - uses ALL records without pagination"""
         
-        data = self.data_parser.parse_data()
-        
-        # Apply filters (same logic as advanced_search)
-        filtered_data = data
-        
-        if state:
-            filtered_data = [r for r in filtered_data if r['state'] and r['state'].lower() == state.lower()]
-        
-        if season:
-            filtered_data = [r for r in filtered_data if r['season'] and r['season'].lower() == season.lower()]
-        
-        if age_category:
-            filtered_data = [r for r in filtered_data if r['age_category'] and r['age_category'].lower() == age_category.lower()]
-        
-        if sex:
-            filtered_data = [r for r in filtered_data if r['sex'] and r['sex'].lower() == sex.lower()]
-        
-        if race:
-            filtered_data = [r for r in filtered_data if r['race'] and r['race'].lower() == race.lower()]
-        
-        if min_rate is not None:
-            filtered_data = [r for r in filtered_data if r['monthly_rate'] is not None and r['monthly_rate'] >= min_rate]
-        
-        if max_rate is not None:
-            filtered_data = [r for r in filtered_data if r['monthly_rate'] is not None and r['monthly_rate'] <= max_rate]
-        
-        if start_date:
-            filtered_data = [r for r in filtered_data if r['date'] and r['date'] >= start_date]
-        
-        if end_date:
-            filtered_data = [r for r in filtered_data if r['date'] and r['date'] <= end_date]
+        # Use the new get_all_records_no_pagination method to get ALL filtered records
+        filtered_data = self.get_all_records_no_pagination(
+            state=state,
+            season=season,
+            age_category=age_category,
+            sex=sex,
+            race=race,
+            min_rate=min_rate,
+            max_rate=max_rate,
+            start_date=start_date,
+            end_date=end_date
+        )
         
         # Group by year-month and calculate averages
         trends = {}
@@ -205,6 +186,52 @@ class CovidService:
             'race': self.data_parser.get_unique_race(),
             'date_range': self.data_parser.get_date_range()
         }
+    
+    def get_all_records_no_pagination(self,
+                                    state: Optional[str] = None,
+                                    season: Optional[str] = None,
+                                    age_category: Optional[str] = None,
+                                    sex: Optional[str] = None,
+                                    race: Optional[str] = None,
+                                    min_rate: Optional[float] = None,
+                                    max_rate: Optional[float] = None,
+                                    start_date: Optional[str] = None,
+                                    end_date: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Get ALL records without pagination for aggregation purposes"""
+        
+        data = self.data_parser.parse_data()
+        
+        # Apply filters (same logic as advanced_search but without pagination)
+        filtered_data = data
+        
+        if state:
+            filtered_data = [r for r in filtered_data if r['state'] and r['state'].lower() == state.lower()]
+        
+        if season:
+            filtered_data = [r for r in filtered_data if r['season'] and r['season'].lower() == season.lower()]
+        
+        if age_category:
+            filtered_data = [r for r in filtered_data if r['age_category'] and r['age_category'].lower() == age_category.lower()]
+        
+        if sex:
+            filtered_data = [r for r in filtered_data if r['sex'] and r['sex'].lower() == sex.lower()]
+        
+        if race:
+            filtered_data = [r for r in filtered_data if r['race'] and r['race'].lower() == race.lower()]
+        
+        if min_rate is not None:
+            filtered_data = [r for r in filtered_data if r['monthly_rate'] is not None and r['monthly_rate'] >= min_rate]
+        
+        if max_rate is not None:
+            filtered_data = [r for r in filtered_data if r['monthly_rate'] is not None and r['monthly_rate'] <= max_rate]
+        
+        if start_date:
+            filtered_data = [r for r in filtered_data if r['date'] and r['date'] >= start_date]
+        
+        if end_date:
+            filtered_data = [r for r in filtered_data if r['date'] and r['date'] <= end_date]
+        
+        return filtered_data
     
     def advanced_search(self,
                        state: Optional[str] = None,

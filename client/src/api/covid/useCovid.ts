@@ -142,6 +142,35 @@ export const useCovid = () => {
     []
   );
 
+  const getAllRecords = useCallback(
+    async (params: CovidSearchParams = {}): Promise<CovidRecord[]> => {
+      try {
+        setError(null);
+
+        const searchParams = new URLSearchParams();
+
+        // Add all possible search parameters
+        Object.entries(params).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== "") {
+            searchParams.append(key, value.toString());
+          }
+        });
+
+        const response = await api.get<{
+          data: CovidRecord[];
+          total_records: number;
+          filters: CovidSearchParams;
+        }>(`/covid/all-records?${searchParams.toString()}`);
+        return response.data.data;
+      } catch (err) {
+        setError("Failed to fetch all records");
+        console.error("Error fetching all records:", err);
+        return [];
+      }
+    },
+    []
+  );
+
   const advancedSearch = useCallback(async (params: CovidSearchParams) => {
     try {
       setLoading(true);
@@ -231,6 +260,7 @@ export const useCovid = () => {
     // Specific data operations
     getStateSummary,
     getTrends,
+    getAllRecords,
     advancedSearch,
     getFilterOptions,
     checkHealth,

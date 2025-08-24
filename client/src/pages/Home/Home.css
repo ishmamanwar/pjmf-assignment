@@ -102,6 +102,16 @@
   color: white;
 }
 
+.cta-button.tertiary {
+  background: var(--pjmf-mcgovern-lime);
+  color: var(--pjmf-mcgovern-gray);
+}
+
+.cta-button.tertiary:hover {
+  background: var(--pjmf-mcgovern-peacock);
+  color: white;
+}
+
 .data-source {
   margin-top: 4rem;
   padding: 2rem;

@@ -15,6 +15,9 @@ export const Header = () => {
         <Link to="/trends" className="nav-link">
           Trends
         </Link>
+        <Link to="/heatmap" className="nav-link">
+          Map
+        </Link>
         <Link to="/about" className="nav-link">
           About
         </Link>

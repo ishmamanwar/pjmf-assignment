@@ -25,3 +25,14 @@ export {
   getChartStyling,
   sortRecords,
 } from "./chartHelpers";
+
+// Heat map helpers
+export {
+  calculateStateHeatMapData,
+  getHeatMapColor,
+  getHeatMapLegend,
+  formatStateTooltip,
+  US_STATE_CODES,
+  STATE_CODE_TO_NAME,
+  type StateHeatMapData,
+} from "./heatMapHelpers";

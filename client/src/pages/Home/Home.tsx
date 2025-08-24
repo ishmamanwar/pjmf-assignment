@@ -55,6 +55,9 @@ export const Home = () => {
           <Link to="/trends" className="cta-button secondary">
             View Trends & Analytics
           </Link>
+          <Link to="/heatmap" className="cta-button tertiary">
+            Interactive Map
+          </Link>
         </div>
 
         <div className="data-source">

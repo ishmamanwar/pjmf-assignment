@@ -1,4 +1,4 @@
-import type { CovidRecord, TrendData } from "../api/covid/interfaces";
+import type { TrendData } from "../api/covid/interfaces";
 
 /**
  * Transform COVID records for line chart visualization
